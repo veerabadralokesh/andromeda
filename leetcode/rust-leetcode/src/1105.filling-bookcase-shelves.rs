@@ -19,3 +19,27 @@ impl Solution {
     }
 }
 
+/* */
+
+impl Solution {
+    pub fn min_height_shelves(books: Vec<Vec<i32>>, shelf_width: i32) -> i32 {
+        let l = books.len();
+        let mut dp = vec![i32::MAX; l+1];
+        dp[l] = 0;
+        let (mut max_h, mut thickness_sum, mut height, mut thickness) = (0, 0, 0, 0);
+        for i in (0..l).rev() {
+            (max_h, thickness_sum) = (0, 0);
+            for j in i..l {
+                (thickness, height) = (books[j][0], books[j][1]);
+                thickness_sum += thickness;
+                if thickness_sum > shelf_width {
+                    break;
+                }
+                max_h = max_h.max(height);
+                dp[i] = dp[i].min(dp[j+1] + max_h);
+            }
+        }
+        dp[0]
+    }
+}
+
