@@ -1,1 +1,1 @@
-rsync -varP `pwd` ~/workspace/andromeda/
+rsync -varuP `pwd` ~/workspace/andromeda/
