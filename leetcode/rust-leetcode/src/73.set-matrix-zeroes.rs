@@ -71,3 +71,51 @@ impl Solution2 {
         }
     }
 }
+
+/* */
+
+impl Solution {
+    pub fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
+        let mut row = false;
+        let mut col = false;
+        let (m, n) = (matrix.len(), matrix[0].len());
+        for i in 0..m {
+            if matrix[i][0] == 0 {
+                col = true;
+                break;
+            }
+        }
+        for j in 0..n {
+            if matrix[0][j] == 0 {
+                row = true;
+                break;
+            }
+        }
+        for i in 1..m {
+            for j in 1..n {
+                if matrix[i][j] == 0 {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+        for i in 1..m {
+            for j in 1..n {
+                if matrix[i][0] == 0 || matrix[0][j] == 0 {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        if row {
+            for j in 0..n {
+                matrix[0][j] = 0;
+            }
+        }
+        if col {
+            for i in 0..m {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+}
+
