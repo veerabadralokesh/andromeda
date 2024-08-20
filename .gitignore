@@ -16,3 +16,5 @@ Cargo.lock
 ## Exclude any zip files
 **/*.zip
 
+## Exclude a.out files
+**/*.out
