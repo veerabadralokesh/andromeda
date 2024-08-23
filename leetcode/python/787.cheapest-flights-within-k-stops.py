@@ -49,3 +49,66 @@ class Solution:
           heapq.heappush(minHeap, (dist[v][stops - 1], v, stops - 1))
 
     return -1
+
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        graph = [[] for _ in range(n)]
+
+        for u, v, w in flights:
+            graph[u].append((v, w))
+
+        minPrice = math.inf
+        heap = [(0, src, 0)]
+        heapq.heapify(heap)
+
+        prices = [[math.inf for _ in range(k+2)] for _ in range(n)]
+        prices[0][0] = 0
+
+        while heap:
+            p, u, stops = heapq.heappop(heap)
+            if u == dst:
+                if p < minPrice:
+                    minPrice = p
+                continue
+            if p > minPrice or stops > k:
+                continue
+            for (v, w) in graph[u]:
+                if prices[v][stops + 1] > p + w:
+                    prices[v][stops + 1] = p + w
+                    heapq.heappush(heap, (p + w, v, stops + 1))
+
+        return -1 if minPrice == math.inf else minPrice
+
+""" """
+
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
+        graph = [[] for _ in range(n)]
+
+        for u, v, w in flights:
+            graph[u].append((v, w))
+
+        minPrice = math.inf
+        heap = [(0, src, 0)]
+        heapq.heapify(heap)
+
+        prices = [[math.inf for _ in range(k+2)] for _ in range(n)]
+        prices[0][0] = 0
+
+        while heap:
+            p, u, stops = heapq.heappop(heap)
+            if u == dst:
+                return p
+                # if p < minPrice:
+                #     minPrice = p
+                # continue
+            if p > minPrice or stops > k:
+                continue
+            for (v, w) in graph[u]:
+                if prices[v][stops + 1] > p + w:
+                    prices[v][stops + 1] = p + w
+                    heapq.heappush(heap, (p + w, v, stops + 1))
+
+        return -1 if minPrice == math.inf else minPrice
+
+
