@@ -1,44 +1,44 @@
+using namespace std;
+
 struct TrieNode {
     vector<shared_ptr<TrieNode>> children;
     bool isEnd = false;
-    TrieNode(): children(26) {}
+    TrieNode() : children(26) {}
 };
 
 class Trie {
 public:
-    Trie() {
-        root = make_shared<TrieNode>();
-    }
-    
+    Trie() { root = make_shared<TrieNode>(); }
+
     void insert(string word) {
         shared_ptr<TrieNode> node = root;
         for (const char c : word) {
-        const int i = c - 'a';
-        if (node->children[i] == nullptr)
-            node->children[i] = make_shared<TrieNode>();
-        node = node->children[i];
+            const int i = c - 'a';
+            if (node->children[i] == nullptr) {
+                node->children[i] = make_shared<TrieNode>();
+            }
+            node = node->children[i];
         }
         node->isEnd = true;
     }
-    
+
     bool search(string word) {
         shared_ptr<TrieNode> node = find(word);
         return node && node->isEnd;
     }
-    
-    bool startsWith(string prefix) {
-        return find(prefix) != nullptr;
-    }
+
+    bool startsWith(string prefix) { return find(prefix) != nullptr; }
 
 private:
     shared_ptr<TrieNode> root;
     shared_ptr<TrieNode> find(const string& prefix) {
         shared_ptr<TrieNode> node = root;
         for (const char c : prefix) {
-        const int i = c - 'a';
-        if (node->children[i] == nullptr)
-            return nullptr;
-        node = node->children[i];
+            const int i = c - 'a';
+            if (node->children[i] == nullptr) {
+                return nullptr;
+            }
+            node = node->children[i];
         }
         return node;
     }
